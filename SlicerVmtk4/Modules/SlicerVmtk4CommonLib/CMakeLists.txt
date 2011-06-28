@@ -4,6 +4,7 @@ SET(SlicerVmtk4CommonLib_PYTHON_SCRIPTS
   LevelSetSegmentationLogic.py
   VesselnessFilteringLogic.py
   CenterlineComputationLogic.py
+  StenosisDetectorLogic.py
   # here go other vmtk logic classes
   )
 

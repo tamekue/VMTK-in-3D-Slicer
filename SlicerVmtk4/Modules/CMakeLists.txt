@@ -1,11 +1,13 @@
 
 # Common python classes for SlicerVmtk4 
 ADD_SUBDIRECTORY(SlicerVmtk4CommonLib)
+ADD_SUBDIRECTORY(StenosisDetectorWizard)
 
 SET(SlicerVmtk4Modules_PYTHON_SCRIPTS
     LevelSetSegmentation.py
     VesselnessFiltering.py
     CenterlineComputation.py
+    StenosisDetector.py
     # here go other VMTK modules
   )
   
