@@ -8,14 +8,14 @@ class VesselnessFilterStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(VesselnessFilterStep, self)
+    self.__parent.__init__(stepid)
     self.setName( '2. Vesselness Filter' )
     self.setDescription( 'Perform vessel enhancement of the loaded volume' )
-    self.__parent=super(VesselnessFilterStep, self)
+        
     self.__inImageData = vtk.vtkImageData()
     self.__outImageData = None
-    # the pointer to the logic
-    self.__logic = None    
+
 
     
   def createUserInterface(self):
@@ -148,22 +148,6 @@ class VesselnessFilterStep(StenosisDetectorStep) :
         
     savedImage.DeepCopy(outImage)
     savedImage.Update()
-    self.GetLogic().setImageData(savedImage)     
+    self.logic().setImageData(savedImage)     
     
  
-
-    
-  def GetLogic(self):
-    '''
-    '''
-    if not self.__logic:
-        
-        self.__logic = self.__parent.logic()
-        
-    return self.__logic
-    
-    
-
-   # self.__previewWindow.setImageData(outImage)
-
-

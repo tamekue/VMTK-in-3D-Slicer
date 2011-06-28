@@ -8,14 +8,14 @@ class LevelSetSegmentationStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(LevelSetSegmentationStep, self)
+    self.__parent.__init__(stepid)      
     self.setName( '3. Optimization of the Segmentation' )
     self.setDescription( 'Optimize the level set segmentation' )
-    self.__parent=super(LevelSetSegmentationStep, self)
+
+        
     self.__inImageData = vtk.vtkImageData()
     self.__outImageData = None
-    # the pointer to the logic
-    self.__logic = None    
 
     
   def createUserInterface(self):
@@ -56,7 +56,7 @@ class LevelSetSegmentationStep(StenosisDetectorStep) :
 
   def onEntry(self, comingFrom, transitionType):    
     self.__parent.onEntry(comingFrom, transitionType)
-    self.__inImageData.DeepCopy(self.__parent.logic().getImageData())
+    self.__inImageData.DeepCopy(self.logic().getImageData())
     self.start()
      
     
@@ -95,7 +95,7 @@ class LevelSetSegmentationStep(StenosisDetectorStep) :
     inputImage = vtk.vtkImageData()  
     inputImage.DeepCopy(self.__inImageData)
     # perform the initialization
-    initImageData.DeepCopy(self.GetLogic().performInitialization(inputImage,
+    initImageData.DeepCopy(self.logic().performInitialization(inputImage,
                                                                  0,
                                                                  100,
                                                                  self.GetLogic().getOutputIds(),
@@ -131,18 +131,8 @@ class LevelSetSegmentationStep(StenosisDetectorStep) :
         
     segmetedImage.DeepCopy(initImageData)
     segmetedImage.Update()
-    self.GetLogic().setImageData(segmetedImage)     
+    self.logic().setImageData(segmetedImage)     
     
  
-    
-    
-  def GetLogic(self):
-    '''
-    '''
-    if not self.__logic:
-        
-        self.__logic = self.__parent.logic()
-        
-    return self.__logic
     
     

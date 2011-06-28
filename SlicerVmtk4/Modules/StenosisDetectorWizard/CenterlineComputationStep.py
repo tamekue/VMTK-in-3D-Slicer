@@ -8,10 +8,10 @@ class CenterlineComputationStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(CenterlineComputationStep, self)
+    self.__parent.__init__(stepid)      
     self.setName( '4. Centerline Computation' )
     self.setDescription( 'Compute the centerline' )
-    self.__parent=super(CenterlineComputationStep, self)
 
     
   def createUserInterface(self):

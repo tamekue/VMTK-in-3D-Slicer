@@ -8,14 +8,11 @@ class InputStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(InputStep, self)
+    self.__parent.__init__(stepid)
     self.setName( '1. Input' )
     self.setDescription( 'Input for Volume and seed' )
-    self.__parent=super(InputStep, self)
-    
-    # the pointer to the logic
-    self.__logic = None    
-    self.__parent.__init__(stepid)
+
 
     
   def createUserInterface(self):
@@ -100,19 +97,9 @@ class InputStep(StenosisDetectorStep) :
     #outImage.DeepCopy(self.GetLogic().performFrangiVesselness(image, minimumDiameter, maximumDiameter, 5, alpha, beta, contrast))
     outImage.DeepCopy(image)
     outImage.Update()
-    self.GetLogic().setImageData(outImage)     
+    self.logic().setImageData(outImage)     
 
     # converting fiducials to vtkIdLists and sending to the logic
     seeds = SlicerVmtk4CommonLib.Helper.convertFiducialHierarchyToVtkIdList(currentSeedsNode, currentVolumeNode)
-    self.GetLogic().setOutputIds(seeds)     
-    
-  def GetLogic(self):
-    '''
-    '''
-    if not self.__logic:
-        
-        self.__logic = self.__parent.logic()
-        
-    return self.__logic
-    
+    self.logic().setOutputIds(seeds)     
     

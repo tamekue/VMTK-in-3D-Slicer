@@ -8,10 +8,11 @@ class OptimizationStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(OptimizationStep, self)
+    self.__parent.__init__(stepid)      
     self.setName( '3. Optimization of the Segmentation' )
     self.setDescription( 'Optimize the level set segmentation' )
-    self.__parent=super(OptimizationStep, self)
+
 
     
   def createUserInterface(self):

@@ -8,10 +8,10 @@ class VisualizationStep(StenosisDetectorStep) :
   """Step implemented using the derivation approach"""
   
   def __init__(self, stepid):
-    self.initialize(stepid)
+    self.__parent=super(VisualizationStep, self)
+    self.__parent.__init__(stepid)      
     self.setName( '5. Visualization of detection results' )
     self.setDescription( 'Show the result of stenosis detection' )
-    self.__parent=super(VisualizationStep, self)
 
     
   def createUserInterface(self):
