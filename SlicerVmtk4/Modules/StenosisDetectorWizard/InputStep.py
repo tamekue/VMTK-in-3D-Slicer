@@ -97,6 +97,10 @@ class InputStep(StenosisDetectorStep) :
     #outImage.DeepCopy(self.GetLogic().performFrangiVesselness(image, minimumDiameter, maximumDiameter, 5, alpha, beta, contrast))
     outImage.DeepCopy(image)
     outImage.Update()
+    
+    outImage.SetSpacing(currentVolumeNode.GetSpacing())
+    outImage.SetOrigin(currentVolumeNode.GetOrigin())
+    
     self.logic().setImageData(outImage)     
 
     # converting fiducials to vtkIdLists and sending to the logic

@@ -126,7 +126,7 @@ class VesselnessFilterStep(StenosisDetectorStep) :
     contrast = 100
     minimumDiameter = 0.5
     maximumDiameter = 2.0
-    contrast = 20
+ 
     outImage = vtk.vtkImageData()
     savedImage = vtk.vtkImageData()
     
@@ -136,7 +136,15 @@ class VesselnessFilterStep(StenosisDetectorStep) :
     
     outImage.DeepCopy(self.logic().performFrangiVesselness(self.__inImageData, minimumDiameter, maximumDiameter, 5, alpha, beta, contrast))
     outImage.Update()            
+    
+    # in the outImage we want spacing 1,1,1 and origin 0,0,0
+    # we save the correct values to the node
+    outImage.SetSpacing([1,1,1])
+    outImage.SetOrigin([0,0,0])
+    
     newVolumeNode.SetAndObserveImageData(outImage)
+    newVolumeNode.SetSpacing(self.__inImageData.GetSpacing())
+    newVolumeNode.SetOrigin(self.__inImageData.GetOrigin())
     
     selectionNode = slicer.app.mrmlApplicationLogic().GetSelectionNode()
     selectionNode.SetReferenceSecondaryVolumeID(newVolumeNode.GetID())
@@ -145,9 +153,19 @@ class VesselnessFilterStep(StenosisDetectorStep) :
     # renew auto window/level for the output
     newVolumeNode.GetDisplayNode().AutoWindowLevelOff()
     newVolumeNode.GetDisplayNode().AutoWindowLevelOn()
+    
+    # show foreground volume
+    numberOfCompositeNodes = slicer.mrmlScene.GetNumberOfNodesByClass('vtkMRMLSliceCompositeNode')
+    for n in xrange(numberOfCompositeNodes):
+      compositeNode = slicer.mrmlScene.GetNthNodeByClass(n, 'vtkMRMLSliceCompositeNode')
+      if compositeNode:
+              compositeNode.SetForegroundOpacity(1.0)
+   
         
     savedImage.DeepCopy(outImage)
     savedImage.Update()
+    savedImage.SetSpacing(self.__inImageData.GetSpacing())
+    savedImage.SetOrigin(self.__inImageData.GetOrigin())
     self.logic().setImageData(savedImage)     
     
  
