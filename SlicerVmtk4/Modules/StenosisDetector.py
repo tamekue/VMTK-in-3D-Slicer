@@ -2,13 +2,7 @@ from __main__ import vtk, qt, ctk, slicer
 #
 # Stenosis detector using VMTK based Tools
 #
-#from StenosisDetectorStep import StenosisDetectorStep
-from InputStep import *
-from VesselnessFilterStep import *
-from LevelSetSegmentationStep import *
-#from OptimizationStep import *
-from CenterlineComputationStep import *
-from VisualizationStep import *
+import StenosisDetectorWizard
 from SlicerVmtk4CommonLib import *
 
 class StenosisDetector:
@@ -44,12 +38,12 @@ class StenosisDetectorWidget:
     
       steps = []
     
-      steps.append(InputStep('Input'))
-      steps.append(VesselnessFilterStep('Vesselness Filter'))
-      steps.append(LevelSetSegmentationStep('Level Set Segmentation'))
+      steps.append(StenosisDetectorWizard.InputStep('Input'))
+      steps.append(StenosisDetectorWizard.VesselnessFilterStep('Vesselness Filter'))
+      steps.append(StenosisDetectorWizard.LevelSetSegmentationStep('Level Set Segmentation'))
   #    steps.append(OptimizationStep('Optimization'))
-      steps.append(CenterlineComputationStep('Centerline Computation'))
-      steps.append(VisualizationStep('Detect Stenosis'))
+      steps.append(StenosisDetectorWizard.CenterlineComputationStep('Centerline Computation'))
+      steps.append(StenosisDetectorWizard.VisualizationStep('Detect Stenosis'))
       
       logic = SlicerVmtk4CommonLib.StenosisDetectorLogic()
     

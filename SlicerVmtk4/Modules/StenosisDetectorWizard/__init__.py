@@ -1,5 +1,5 @@
 # import the vmtk common libs
-from StensosisDetectorStep import *
+from StenosisDetectorStep import *
 from InputStep import *
 from VesselnessFilterStep import *
 from LevelSetSegmentationStep import *

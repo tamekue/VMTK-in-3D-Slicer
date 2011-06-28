@@ -1,14 +1,6 @@
 # vtk includes
 from __main__ import vtk
 
-# import the vmtk libraries
-
-import VesselnessFilteringLogic
-try:
-    from libvtkvmtkSegmentationPython import *
-except ImportError:
-    print "FAILURE: Unable to import the SlicerVmtk4 libraries!"
-
 
 class StenosisDetectorLogic(object):
     '''
@@ -19,6 +11,14 @@ class StenosisDetectorLogic(object):
         '''
         Constructor
         '''
+        # import the vmtk libraries
+
+        import VesselnessFilteringLogic
+        try:
+            from libvtkvmtkSegmentationPython import *
+        except ImportError:
+            print "FAILURE: Unable to import the SlicerVmtk4 libraries!"
+
         self.__imageData = None
         self.__outputIds = None
         self.__logic = None
